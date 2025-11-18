@@ -124,3 +124,17 @@ export function isKittyProtocolEnabled(): boolean {
 export function isKittyProtocolSupported(): boolean {
   return protocolSupported;
 }
+
+/**
+ * Re-enables the Kitty keyboard protocol and SGR mouse mode if they were previously enabled.
+ * This is useful when returning from an external program (like vim) that might have
+ * reset the terminal state.
+ */
+export function restoreTerminalState(): void {
+  if (protocolEnabled) {
+    process.stdout.write('\x1b[>1u');
+  }
+  if (sgrMouseEnabled) {
+    process.stdout.write('\x1b[?1006h');
+  }
+}

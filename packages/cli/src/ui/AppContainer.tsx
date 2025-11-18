@@ -110,6 +110,7 @@ import { isWorkspaceTrusted } from '../config/trustedFolders.js';
 import { disableMouseEvents, enableMouseEvents } from './utils/mouse.js';
 import { useAlternateBuffer } from './hooks/useAlternateBuffer.js';
 import { useSettings } from './contexts/SettingsContext.js';
+import { restoreTerminalState } from './utils/kittyProtocolDetector.js';
 
 const WARNING_PROMPT_DURATION_MS = 1000;
 const QUEUE_ERROR_DISPLAY_DURATION_MS = 3000;
@@ -378,6 +379,11 @@ export const AppContainer = (props: AppContainerProps) => {
     }
     setHistoryRemountKey((prev) => prev + 1);
   }, [setHistoryRemountKey, stdout, isAlternateBuffer]);
+
+  const handleEditorClose = useCallback(() => {
+    restoreTerminalState();
+    refreshStatic();
+  }, [refreshStatic]);
 
   const {
     isThemeDialogOpen,
@@ -683,7 +689,7 @@ Logging in with Google... Please restart Gemini CLI to continue.
     performMemoryRefresh,
     modelSwitchedFromQuotaError,
     setModelSwitchedFromQuotaError,
-    refreshStatic,
+    handleEditorClose,
     onCancelSubmit,
     setEmbeddedShellFocused,
     terminalWidth,
