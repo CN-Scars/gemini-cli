@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { format } from 'node:util';
+import { coreEvents } from './events.js';
+
 /**
  * A simple, centralized logger for developer-facing debug messages.
  *
@@ -16,21 +19,31 @@
  * This is a thin wrapper around the native `console` object. The `ConsolePatcher`
  * will intercept these calls and route them to the debug drawer UI.
  */
+
+const enableDebugLogger = true;
 class DebugLogger {
   log(...args: unknown[]): void {
-    console.log(...args);
+    if (enableDebugLogger) {
+      coreEvents.emitConsoleLog('log', format(...args));
+    }
   }
 
   warn(...args: unknown[]): void {
-    console.warn(...args);
+    if (enableDebugLogger) {
+      coreEvents.emitConsoleLog('warn', format(...args));
+    }
   }
 
   error(...args: unknown[]): void {
-    console.error(...args);
+    if (enableDebugLogger) {
+      coreEvents.emitConsoleLog('error', format(...args));
+    }
   }
 
   debug(...args: unknown[]): void {
-    console.debug(...args);
+    if (enableDebugLogger) {
+      coreEvents.emitConsoleLog('debug', format(...args));
+    }
   }
 }
 
