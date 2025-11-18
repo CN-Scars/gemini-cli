@@ -215,7 +215,6 @@ describe('gemini.tsx main function', () => {
         getOutputFormat: () => 'text',
         getExtensions: () => [],
         getUsageStatisticsEnabled: () => false,
-        getGhWorkflowName: () => undefined,
       } as unknown as Config;
     });
     vi.mocked(loadSettings).mockReturnValue({
@@ -367,7 +366,6 @@ describe('gemini.tsx main function kitty protocol', () => {
       getOutputFormat: () => 'text',
       getExtensions: () => [],
       getUsageStatisticsEnabled: () => false,
-      getGhWorkflowName: () => undefined,
     } as unknown as Config);
     vi.mocked(loadSettings).mockReturnValue({
       errors: [],

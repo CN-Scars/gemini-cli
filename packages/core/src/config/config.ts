@@ -305,7 +305,6 @@ export interface ConfigParameters {
   hooks?: {
     [K in HookEventName]?: HookDefinition[];
   };
-  ghWorkflowName?: string;
 }
 
 export class Config {
@@ -419,7 +418,6 @@ export class Config {
     | undefined;
   private experiments: Experiments | undefined;
   private experimentsPromise: Promise<void> | undefined;
-  private readonly ghWorkflowName: string | undefined;
 
   constructor(params: ConfigParameters) {
     this.sessionId = params.sessionId;
@@ -557,7 +555,6 @@ export class Config {
     this.disableYoloMode = params.disableYoloMode ?? false;
     this.hooks = params.hooks;
     this.experiments = params.experiments;
-    this.ghWorkflowName = params.ghWorkflowName;
 
     if (params.contextFileName) {
       setGeminiMdFilename(params.contextFileName);
@@ -1044,10 +1041,6 @@ export class Config {
 
   getUsageStatisticsEnabled(): boolean {
     return this.usageStatisticsEnabled;
-  }
-
-  getGhWorkflowName(): string | undefined {
-    return this.ghWorkflowName;
   }
 
   getExperimentalZedIntegration(): boolean {
